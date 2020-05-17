@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from optim_app.models import UserFunction
+
+admin.site.register(UserFunction)
