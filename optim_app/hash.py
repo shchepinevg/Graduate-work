@@ -7,7 +7,7 @@ def get_path(file_name):
 
     str_to_hash = file_name + salt
     hash_str = md5(str_to_hash.encode()).hexdigest()
-    path = '/userfunctions/' + hash_str[:2] + '/' + hash_str[2:4] + '/'
+    path = hash_str[:2] + '\\' + hash_str[2:4] + '\\'
     new_file_name = hash_str[4:]
 
     return path, new_file_name

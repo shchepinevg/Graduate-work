@@ -1,28 +1,25 @@
-import os
+from rest_framework.generics import CreateAPIView, ListAPIView
 
-from django.core.files.storage import FileSystemStorage
-from rest_framework.generics import CreateAPIView
-
-from optim_app.hash import get_path
+from optim_app.models import UserFunction
 from optim_app.serializer import UserFunctionSerializer
-from optim_project.settings import BASE_DIR
+from optim_app.service import ServiceToCreate
 
+
+class UserFunctionListView(ListAPIView):
+    serializer_class = UserFunctionSerializer
+    queryset = UserFunction.objects.all()
 
 class UserFunctionCreateView(CreateAPIView):
     serializer_class = UserFunctionSerializer
+    queryset = UserFunction.objects.all()
 
-    def get_serializer(self, *args, **kwargs):
-        serializer_class = self.get_serializer_class()
-        kwargs["context"] = self.get_serializer_context()
-        draft_request_data = self.request.data.copy()
+    def create(self, request, *args, **kwargs):
+        request.data._mutable = True
 
-        path, file_name = get_path(draft_request_data.get("name_func"))
-        fss = FileSystemStorage(location=os.path.join(BASE_DIR, path))
-        fss.save(file_name, draft_request_data.get("user_func"))
+        stc = ServiceToCreate(request)
+        stc.save_to_file_sys()
+        request.data["hash"] = stc.get_path_to_request()
 
-        # Проверить
-        draft_request_data["func_file"] = path
-        kwargs["data"] = draft_request_data
+        request.data._mutable = False
 
-        return serializer_class(*args, **kwargs)
-
+        return super().create(request, *args, **kwargs)
