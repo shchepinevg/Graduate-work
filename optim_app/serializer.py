@@ -7,3 +7,4 @@ class UserFunctionSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserFunction
         fields = ('__all__')
+
