@@ -1,6 +1,7 @@
 import os
 import random as rn
 import patoolib
+import shutil
 
 from hashlib import md5
 
@@ -8,12 +9,12 @@ from django.core.files.storage import FileSystemStorage
 from optim_project.settings import BASE_DIR
 
 
-class ServiceToCreate:
+class ServiceToCreateDir:
     def __init__(self, data):
         self.data = data
-        self.path, self.path2 = self.get_path_via_hash(data["name"])
+        self.path, self.path2 = self.get_path_with_hash(data["name"])
 
-    def save_to_file_sys(self):
+    def save_directory(self):
         FULL_PATH_TO_FILE = os.path.join(BASE_DIR, 'optim_app\\userfunctions', self.path)
         PATH_TO_FILE = os.path.join("userfunctions", self.path)
 
@@ -26,11 +27,10 @@ class ServiceToCreate:
 
         os.remove(os.path.join(PATH_TO_FILE, self.data["hash"].name))
 
-    def get_path_to_request(self):
         return os.path.join(self.path, self.path2)
 
 
-    def get_path_via_hash(self, some_str):
+    def get_path_with_hash(self, some_str):
         rn.seed()
         salt = str(rn.randint(1000, 999999))
 
@@ -41,9 +41,22 @@ class ServiceToCreate:
 
         return path, new_file_name
 
-class ServiceToDelete:
+class ServiceToDeleteDir:
     def __init__(self, path):
         self.path = path
 
-    def del_dir(self):
-        pass
+    def del_directory(self):
+        FULL_PATH = os.path.join(BASE_DIR, 'optim_app\\userfunctions', self.path)
+        FULL_PATH_1 = os.path.join(BASE_DIR, 'optim_app\\userfunctions', self.path[:2])
+        FULL_PATH_2 = os.path.join(BASE_DIR, 'optim_app\\userfunctions', self.path[:5])
+
+        shutil.rmtree(FULL_PATH)
+
+        if len(os.listdir(FULL_PATH_2)) == 0:
+            os.rmdir(FULL_PATH_2)
+
+        if len(os.listdir(FULL_PATH_1)) == 0:
+            os.rmdir(FULL_PATH_1)
+
+class ServiceToR:
+    pass

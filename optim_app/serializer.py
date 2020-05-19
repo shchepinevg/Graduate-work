@@ -8,3 +8,7 @@ class UserFunctionSerializer(serializers.ModelSerializer):
         model = UserFunction
         fields = ('__all__')
 
+class UFNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserFunction
+        fields = ("id", "name")
