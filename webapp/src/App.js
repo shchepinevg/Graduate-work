@@ -1,7 +1,8 @@
 import React, {Component} from "react"
-//import FuncNames from './components/FuncNames'
-//import CreateFunc from './components/CreateFunc'
+
 import Header from './components/Header'
+import FuncInfo from './components/FuncInfo'
+import FuncNameList from './components/FuncNameList'
 
 import 'antd/dist/antd.css';
 
@@ -10,6 +11,7 @@ class App extends Component {
         return (
             <div>
                 <Header />
+                <FuncNameList />
             </div>
         )
     }

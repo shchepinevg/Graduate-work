@@ -8,7 +8,7 @@ class Header extends Component {
     
     render() {
         return (
-            <Menu mode="horizontal">
+            <Menu mode="horizontal" className="menu-block">
                 <Menu.Item key="function">
                     Функции
                 </Menu.Item>
