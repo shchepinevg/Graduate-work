@@ -1,0 +1,31 @@
+.tabs {
+    text-align: center !important;
+}
+
+.select-meth {
+    width: 240px !important;
+    margin-left: 10px !important;
+    margin-right: 20px !important;
+}
+
+.inputN {
+    width: 80px !important;
+    margin-bottom: 30px !important;
+    margin-left: 10px !important;
+    margin-right: 20px !important;
+}
+
+.input-param {
+    width: 80px;
+    margin-bottom: 20px ;
+    margin-left: 725px;
+}
+
+.name-param {
+    position: absolute;
+    left: 530px;
+}
+
+.radio {
+    margin-bottom: 30px;
+}

@@ -1,0 +1,14 @@
+.btn-block {
+    position: absolute;
+    left: 680px;
+    bottom: 500px;
+}
+
+.btn {
+    margin-right: 10px;
+}
+
+.btn-history {
+    width: 30%;
+    margin-left: 228px;
+}

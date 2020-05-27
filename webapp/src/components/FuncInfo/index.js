@@ -31,19 +31,19 @@ class FuncInfo extends Component {
             <Form name="funcInfo" >
                 <div className="base-style">
                     Название функции:
-                    <Input name="nameFunc" />
+                    <Input name="nameFunc" disabled={this.props.isDisabled} />
                 </div>
                 <div className="base-style">
                     <Upload name="fileFunc" {...props}>
-                        <Button ><UploadOutlined /> Загрузить файл</Button>
+                        <Button disabled={this.props.isDisabled}><UploadOutlined /> Загрузить файл</Button>
                     </Upload>
                 </div>
                 <div className="base-style">
                     Относительный путь запускаемого файла:
-                    <Input name="pathFunct" />
+                    <Input name="pathFunct" disabled={this.props.isDisabled}/>
                 </div>
                 <div>
-                    <ParamForFunc />
+                    <ParamForFunc isDisabled = {this.props.isDisabled}/>
                 </div>
             </Form>
         )
