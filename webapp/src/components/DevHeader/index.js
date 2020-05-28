@@ -4,11 +4,11 @@ import { Menu } from 'antd'
 
 import './style.css'
 
-class Header extends Component {
+class DevHeader extends Component {
     
     render() {
         return (
-            <Menu mode="horizontal" className="menu-block">
+            <Menu mode="horizontal" className="menu">
                 <Menu.Item key="function">
                     Функции
                 </Menu.Item>
@@ -23,4 +23,4 @@ class Header extends Component {
     }
 }
 
-export default Header
+export default DevHeader

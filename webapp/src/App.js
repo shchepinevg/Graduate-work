@@ -1,20 +1,22 @@
 import React, {Component} from "react"
 
-import Header from './components/Header'
-import FuncInfo from './components/FuncInfo'
-import FuncNameList from './components/FuncNameList'
-import Func from './components/Func'
-import Optimization from './components/Optimization'
+import { Layout } from 'antd';
+
+import DevHeader from './components/DevHeader'
+import {BaseRoute} from './components/router/BaseRoute'
 
 import 'antd/dist/antd.css';
+
+const {Footer, Content } = Layout;
 
 class App extends Component {
     render() {
         return (
-            <div>
-                <Header />
-                <Optimization />
-            </div>
+            <Layout style={{ minHeight:"100vh" }}>
+                <DevHeader />
+                <Content style={{ marginTop : '100px'}}><BaseRoute /></Content>
+                <Footer style={{ textAlign: 'center' }}>Algorithm parameter optimization ©2020 Created by Shchepin Evgeny</Footer>
+            </Layout>
         )
     }
 }

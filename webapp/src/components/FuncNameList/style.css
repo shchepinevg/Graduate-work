@@ -1,6 +1,8 @@
 .main-block {
-    margin-left: 100px;
     margin-right: 600px;
+    width: 300px !important;
+    background-color: #f0f2f5 !important;
+    border: 4px !important;
 }
 
 .btn {
