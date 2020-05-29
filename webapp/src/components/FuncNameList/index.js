@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
-import { List, Button, Checkbox, Menu } from "antd";
+import { Link } from 'react-router-dom'
+
+import { Button, Checkbox, Menu } from "antd";
 
 import "./style.css";
 
@@ -49,16 +51,15 @@ class FuncNameList extends Component {
     });
   };
 
-  renderFunc = (value) => {
+  renderFunc = () => {
     return (
       <Menu mode="inline" className="main-block">
         {data.map((val, index) => {
             if (this.state.isList) {
-                return <Menu.Item key={index}>{val.title}</Menu.Item>;
+                return <Menu.Item key={index}><Link to={`/functions/${index}`}>{val.title}</Link></Menu.Item>;
             } else {
                 return <Menu.Item key={index}><Checkbox key={index}>{val.title}</Checkbox></Menu.Item>;
             }
-            
         })}
       </Menu>
     );

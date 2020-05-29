@@ -33,10 +33,10 @@ class ParamForFunc extends Component {
               <div>
                 {fields.map((field, index) => (
                   <Form.Item
-                    {...(index === 0
-                      ? formItemLayout
-                      : formItemLayoutWithOutLabel)}
-                    label={index === 0 ? "Параметры" : ""}
+                    // {...(index === 0
+                    //   ? formItemLayout
+                    //   : formItemLayoutWithOutLabel)}
+                    // label={index === 0 ? "Параметры" : ""}
                     required={false}
                     key={field.key}
                   >
@@ -64,16 +64,16 @@ class ParamForFunc extends Component {
                       </Radio.Group>
                       <Input
                         placeholder="Нижняя граница"
-                        style={{ width: "15%" }}
+                        style={{ width: "13%" }}
                         disabled = {this.props.isDisabled}
                       />
                       <Input
                         placeholder="Верхняя граница"
-                        style={{ width: "15%" }}
+                        style={{ width: "13%" }}
                         disabled = {this.props.isDisabled}
                       />
                     </Form.Item>
-                    {fields.length > 1 ? (
+                    {fields.length > 0 ? (
                       <MinusCircleOutlined
                         className="dynamic-delete-button"
                         style={{ margin: "0 8px" }}
@@ -93,7 +93,7 @@ class ParamForFunc extends Component {
                     onClick={() => {
                       add();
                     }}
-                    style={{ width: "18%" }}
+                    style={{ marginLeft: '170px', width: '300px'}}
                   >
                     <PlusOutlined /> Добавить параметр
                   </Button>

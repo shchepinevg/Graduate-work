@@ -25,30 +25,33 @@ const props = {
     },
   };
 
-class FuncInfo extends Component {
+class AddFunc extends Component {
     render() {
         return (
+          <div>
             <Form name="funcInfo" >
-                <div className="base-style">
+                <div className="input-block">
                     Название функции:
                     <Input name="nameFunc" disabled={this.props.isDisabled} />
+                    <Button style={{position: 'absolute', marginLeft: '30px'}} type='primary'>Добавить функцию</Button>
                 </div>
-                <div className="base-style">
+                <div className="input-block">
                     <Upload name="fileFunc" {...props}>
                         <Button disabled={this.props.isDisabled}><UploadOutlined /> Загрузить файл</Button>
                     </Upload>
                 </div>
-                <div className="base-style">
+                <div className="input-block">
                     Относительный путь запускаемого файла:
                     <Input name="pathFunct" disabled={this.props.isDisabled}/>
                 </div>
-                <div>
+                <div style={{marginLeft: '150px'}}>
                     <ParamForFunc isDisabled = {this.props.isDisabled}/>
                 </div>
             </Form>
+          </div>
         )
     }
 }
 
-export default FuncInfo
+export default AddFunc
 

@@ -14,8 +14,9 @@
   opacity: 0.5;
 }
 
-.base-style {
-  width: 30%;
+.input-block {
+  margin-left: 350px;
   margin-bottom: 20px;
-  margin-left: 228px;
+  width: 650px;
 }
+

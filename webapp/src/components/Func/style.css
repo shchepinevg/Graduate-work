@@ -1,14 +1,27 @@
-.btn-block {
+.btn-change {
     position: absolute;
-    left: 680px;
-    bottom: 500px;
+    left: 1025px;
+    bottom: 390px;
 }
 
-.btn {
-    margin-right: 10px;
+.btn-optim {
+    position: absolute;
+    left: 760px;
+    bottom: -30px;
 }
 
 .btn-history {
     width: 30%;
-    margin-left: 228px;
+    margin-left: 350px;
+}
+
+.table-block {
+    margin-left: 350px;
+    margin-right: 350px;
+    margin-top: -230px;
+    margin-bottom: -10px;
+}
+
+.input-blocks {
+    margin-bottom: 20px; 
 }

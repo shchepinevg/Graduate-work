@@ -3,10 +3,15 @@ import React from "react"
 import { Switch, Route } from 'react-router-dom'
 
 import {FunctionRoute} from './FunctionRoute'
+import {FunctionsRoute} from './FunctionsRoute'
+
+import AddFunc from '../AddFunc'
 
 export const BaseRoute = () => (
     <Switch>
-        <Route path='/functions' component={FunctionRoute} />
+        <Route path='/functions' component={FunctionsRoute} />
+        <Route path='/function' component={FunctionRoute} />
+        <Route path='/add' component={AddFunc} />
     </Switch>
 )
 

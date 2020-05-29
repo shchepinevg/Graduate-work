@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { Link } from 'react-router-dom'
+
 import { Menu } from 'antd'
 
 import './style.css'
@@ -10,7 +12,7 @@ class DevHeader extends Component {
         return (
             <Menu mode="horizontal" className="menu">
                 <Menu.Item key="function">
-                    Функции
+                    <Link to={`/functions`}>Функции</Link>
                 </Menu.Item>
                 <Menu.Item key="signUp" className="menu-item">
                     Зарегестрироваться

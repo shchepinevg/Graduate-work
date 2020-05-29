@@ -15,7 +15,7 @@ class App extends Component {
             <Layout style={{ minHeight:"100vh" }}>
                 <DevHeader />
                 <Content style={{ marginTop : '100px'}}><BaseRoute /></Content>
-                <Footer style={{ textAlign: 'center' }}>Algorithm parameter optimization ©2020 Created by Shchepin Evgeny</Footer>
+                <Footer style={{ textAlign: 'center', marginTop : '100px'}}>Algorithm parameter optimization ©2020 Created by Shchepin Evgeny</Footer>
             </Layout>
         )
     }

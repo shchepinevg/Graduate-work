@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { Button } from 'antd'
 
-import FuncInfo from '../FuncInfo'
+import FuncInfo from './FuncInfo'
 
 import './style.css'
 
@@ -14,10 +14,10 @@ class Func extends Component {
     render() {
         return (
             <div >
-                <FuncInfo isDisabled = {this.state.isDisabled}/>
+                <FuncInfo idFunc={this.props.match.params.id} isDisabled = {this.state.isDisabled}/>
                 <div className="btn-block">
-                    <Button type="primary" shape="round" className="btn" onClick={this.changeClick}>Изменить</Button>
-                    <Button type="primary" shape="round" className="btn">Оптимизировать</Button>
+                    <Button type="primary" className="btn-change" onClick={this.changeClick}>Изменить</Button>
+                    <Button type="primary" shape="round" className="btn-optim">Оптимизировать</Button>
                 </div>
                 <div className="btn-history">
                     <Button type="dashed" block>Просмотреть историю запусков</Button>
