@@ -16,16 +16,15 @@ class ServiceToCreateDir:
 
     def save_directory(self):
         FULL_PATH_TO_FILE = os.path.join(BASE_DIR, 'optim_app\\userfunctions', self.path)
-        PATH_TO_FILE = os.path.join("userfunctions", self.path)
 
         fss = FileSystemStorage(location=FULL_PATH_TO_FILE)
         fss.save(self.data["hash"].name, self.data["hash"])
 
-        os.mkdir(os.path.join(PATH_TO_FILE, self.path2))
+        os.mkdir(os.path.join(FULL_PATH_TO_FILE, self.path2))
         patoolib.extract_archive(os.path.join(FULL_PATH_TO_FILE, self.data["hash"].name),
                                  outdir=os.path.join(FULL_PATH_TO_FILE, self.path2))
 
-        os.remove(os.path.join(PATH_TO_FILE, self.data["hash"].name))
+        os.remove(os.path.join(FULL_PATH_TO_FILE, self.data["hash"].name))
 
         return os.path.join(self.path, self.path2)
 
