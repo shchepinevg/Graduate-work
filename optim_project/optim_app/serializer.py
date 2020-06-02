@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from optim_app.models import UserFunction, ParameterInfo, OptimizationHistory
+from optim_app.models import UserFunction, ParameterInfo, OptimizationFunction, OptimizationParameters
 
 
 class ParameterInfoSerializer(serializers.ModelSerializer):
@@ -18,13 +18,17 @@ class UF_ParamInfo_Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserFunction
-        fields = ('id', 'user', 'name', 'relative_path', 'param',)
+        fields = ('id', 'user', 'hash', 'name', 'relative_path', 'param',)
 
-class OptimHistorySerializer(serializers.ModelSerializer):
+class OptimizationFunctionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OptimizationHistory
+        model = OptimizationFunction
         fields = '__all__'
 
+class OptimizationParametersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OptimizationParameters
+        fields = '__all__'
 
 
 
