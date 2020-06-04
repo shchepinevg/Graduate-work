@@ -56,28 +56,27 @@ class ParamForFunc extends Component {
                       <Input
                         placeholder="Название параметра"
                         style={{ width: "15%" }}
-                        disabled = {this.props.isDisabled}
+                        name={"np_"+index}
                       />
                       <Radio.Group>
-                        <Radio.Button value="a" disabled = {this.props.isDisabled}>Дискретный</Radio.Button>
-                        <Radio.Button value="b" disabled = {this.props.isDisabled}>Непрерывный</Radio.Button>
+                        <Radio.Button value="a" >Дискретный</Radio.Button>
+                        <Radio.Button value="b" >Непрерывный</Radio.Button>
                       </Radio.Group>
                       <Input
                         placeholder="Нижняя граница"
                         style={{ width: "13%" }}
-                        disabled = {this.props.isDisabled}
+                        name={"bl_"+index}
                       />
                       <Input
                         placeholder="Верхняя граница"
                         style={{ width: "13%" }}
-                        disabled = {this.props.isDisabled}
+                        name={"bu_"+index}
                       />
                     </Form.Item>
                     {fields.length > 0 ? (
                       <MinusCircleOutlined
                         className="dynamic-delete-button"
                         style={{ margin: "0 8px" }}
-                        disabled = {this.props.isDisabled}
                         onClick={() => {
                           remove(field.name);
                         }}

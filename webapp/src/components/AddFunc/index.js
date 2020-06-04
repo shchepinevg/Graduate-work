@@ -5,6 +5,8 @@ import { UploadOutlined } from '@ant-design/icons';
 
 import ParamForFunc from './ParamForFunc'
 
+import axios from "axios"
+
 import "./style.css"
 
 const props = {
@@ -29,27 +31,31 @@ class AddFunc extends Component {
     render() {
         return (
           <div>
-            <Form name="funcInfo" >
+            <Form id="funcInfo" >
                 <div className="input-block">
                     Название функции:
-                    <Input name="nameFunc" disabled={this.props.isDisabled} />
-                    <Button style={{position: 'absolute', marginLeft: '30px'}} type='primary'>Добавить функцию</Button>
+                    <Input name="nameFunc" />
                 </div>
                 <div className="input-block">
-                    <Upload name="fileFunc" {...props}>
-                        <Button disabled={this.props.isDisabled}><UploadOutlined /> Загрузить файл</Button>
-                    </Upload>
+                    <input type="file" name="fileFunc" />
                 </div>
                 <div className="input-block">
                     Относительный путь запускаемого файла:
-                    <Input name="pathFunct" disabled={this.props.isDisabled}/>
+                    <Input name="pathFunc" />
                 </div>
                 <div style={{marginLeft: '150px'}}>
-                    <ParamForFunc isDisabled = {this.props.isDisabled}/>
+                    <ParamForFunc />
                 </div>
             </Form>
+
+            <Button className="btn-add" onClick={this.addFunc} type='primary'>Добавить функцию</Button>
           </div>
         )
+    }
+
+     addFunc = () => {
+      const formData = new FormData(document.getElementById("funcInfo"))
+      axios.post("http://127.0.0.1:8000/api/create/function", formData)
     }
 }
 

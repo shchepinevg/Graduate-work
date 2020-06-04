@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { Table, Input, Button, Upload, Form, message } from 'antd'
 import { UploadOutlined } from '@ant-design/icons';
 
-import { data, data2, data3 } from './data'
 
 import './style.css'
 
@@ -15,18 +14,18 @@ const columns = [
     },
     {
         title: "Тип",
-        dataIndex: "type",
-        key: "type",
+        dataIndex: "discrete_continuous",
+        key: "discrete_continuous",
     },
     {
         title: "Нижняя граница",
-        dataIndex: "borderL",
-        key: "borderL",
+        dataIndex: "lower_bound",
+        key: "lower_bound",
     },
     {
         title: "Верхняя граница",
-        dataIndex: "borderH",
-        key: "borderH",
+        dataIndex: "upper_bound",
+        key: "upper_bound",
     }
 ]
 
@@ -55,7 +54,7 @@ class FuncInfo extends Component {
                     <Form name="funcInfo" >
                         <div className="input-blocks">
                             Название функции:
-                            <Input name="nameFunc" />
+                            <Input name="nameFunc" value={this.props.data[this.props.idFunc].name} />
                         </div>
                         <div className="input-blocks">
                             <Upload name="fileFunc" {...props}>
@@ -64,10 +63,10 @@ class FuncInfo extends Component {
                         </div>
                         <div className="input-blocks">
                             Относительный путь запускаемого файла:
-                            <Input name="pathFunct"/>
+                            <Input name="pathFunct" value={this.props.data[this.props.idFunc].relative_path} />
                         </div>
                     </Form>
-                <Table columns={columns} dataSource={data.param} pagination = {false} />
+                <Table columns={columns} dataSource={this.props.data[this.props.idFunc].param} pagination = {false} />
             </div>
         )
     }

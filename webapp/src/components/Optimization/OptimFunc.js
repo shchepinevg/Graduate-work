@@ -2,13 +2,14 @@ import React, { Component } from "react";
 
 import { GA, DE, CE } from "./methods";
 
-import { Select, Input, Radio, Button } from "antd";
+import { Select, Input, Radio, Button, Checkbox } from "antd";
 const { Option } = Select;
 
 class OptimFunc extends Component {
   state = {
-    focusMethod: GA.name,
+    focusMethod: "GA",
     isParamRecomend: true,
+    isMinimization: true
   };
 
   render() {
@@ -17,15 +18,22 @@ class OptimFunc extends Component {
         <h1 style={{marginBottom: "30px"}}>{this.props.nameFunc}</h1>
         <div>
             <b>Метод оптимизации:</b>
-            <Select defaultValue={GA.name} onChange={this.onChangeMethods} className="select-meth">
-                <Option value={GA.name}>{GA.name}</Option>
-                <Option value={CE.name}>{CE.name}</Option>
-                <Option value={DE.name}>{DE.name}</Option>
+            <Select defaultValue="GA" onChange={this.onChangeMethods} className="select-meth">
+                <Option value="GA">Генетический алгоритм</Option>
+                <Option value="CE">Кросс-энтропия</Option>
+                <Option value="DE">Дифференциальная эволюция</Option>
             </Select>
         </div>
         <div style={{ marginTop: "20px" }}>
             <b>Количество запусков целевой функции:</b>
-            <Input name="paramN" className="inputN" />
+            <Input id="N" className="inputN" />
+        </div>
+
+        <div className="radio">
+            <Radio.Group onChange={this.onChangeMin} value={this.state.isMinimization}>
+            <Radio value={true}>Найти минимум</Radio>
+            <Radio value={false}>Найти максимум</Radio>
+            </Radio.Group>
         </div>
 
         <div className="radio">
@@ -35,7 +43,6 @@ class OptimFunc extends Component {
             </Radio.Group>
         </div>
 
-
         <div className="name-param">
           <b>Название, тип, от до</b>
         </div>
@@ -44,15 +51,58 @@ class OptimFunc extends Component {
         </div>
         <div>{this.paramsMethod(this.state.focusMethod)}</div>
 
-        <Button type="primary" style={{width: "260px"}} block>Запустить</Button>
+        <Button type="primary" style={{width: "260px"}} onClick={this.runOptim} block>Запустить</Button>
 
       </div>
     );
   }
 
+  runOptim = () => {
+    const data = {
+      "user_function": 1,
+      "is_function": 1,
+      "optimization_meth": this.state.focusMethod,
+      "N": document.getElementById("N").value,
+      "optim_type": this.state.isMinimization ? 1 : 2,
+      "isRecomend": this.state.isParamRecomend ? 1 : 2,
+      "value": -1,
+      "param_optim": this.getUserValue(this.state.focusMethod)
+    }
+
+    console.log(data)
+  }
+
+  getUserValue = (focusMeth) => {
+    let meth = null
+    if (focusMeth === "GA") {
+      meth = GA
+    } else if (focusMeth === "CE") {
+      meth = CE
+    } else if (focusMeth === "DE") {
+      meth = DE
+    }
+
+    if (this.state.isParamRecomend) {
+      return(meth.recomParam)
+    }
+
+    let methCopy = JSON.parse(JSON.stringify(meth))
+    methCopy.recomParam.map((val, index) => {
+      val.value = document.getElementById("f_"+index).value
+    })
+
+    return(methCopy.recomParam)
+  }
+
   onChangeParam = (e) => {
     this.setState({
         isParamRecomend: e.target.value,
+    })
+  }
+
+  onChangeMin = (e) => {
+    this.setState({
+      isMinimization: e.target.value
     })
   }
 
@@ -63,9 +113,9 @@ class OptimFunc extends Component {
   };
 
   paramsMethod = (value) => {
-    if (value === GA.name) {
+    if (value === "GA") {
       return (
-        <div>
+        <div id="methParam">
           {GA.recomParam.map((val, index) => {
             return (
               <div>
@@ -73,7 +123,7 @@ class OptimFunc extends Component {
                   {val.name}, {val.type}, {val.borderLow}, {val.borderHight}
                 </div>
                 <div className="input-param">
-                  <Input key={index} defaultValue={val.value} disabled={this.state.isParamRecomend}/>
+                  <Input id={"f_" + index} defaultValue={val.value} disabled={this.state.isParamRecomend}/>
                 </div>
               </div>
             );
@@ -82,9 +132,9 @@ class OptimFunc extends Component {
       );
     }
 
-    if (value === CE.name) {
+    if (value === "CE") {
       return (
-        <div>
+        <div id="methParam">
           {CE.recomParam.map((val, index) => {
             return (
               <div>
@@ -92,7 +142,7 @@ class OptimFunc extends Component {
                   {val.name}, {val.type}, {val.borderLow}, {val.borderHight}
                 </div>
                 <div className="input-param">
-                  <Input key={index} defaultValue={val.value} disabled={this.state.isParamRecomend}/>
+                  <Input id={"f_" + index} defaultValue={val.value} disabled={this.state.isParamRecomend}/>
                 </div>
               </div>
             );
@@ -101,9 +151,9 @@ class OptimFunc extends Component {
       );
     }
 
-    if (value === DE.name) {
+    if (value === "DE") {
       return (
-        <div>
+        <div id="methParam">
           {DE.recomParam.map((val, index) => {
             return (
               <div>
@@ -111,7 +161,7 @@ class OptimFunc extends Component {
                   {val.name}, {val.type}, {val.borderLow}, {val.borderHight}
                 </div>
                 <div className="input-param">
-                  <Input key={index} defaultValue={val.value} disabled={this.state.isParamRecomend}/>
+                  <Input id={"f_" + index} defaultValue={val.value} disabled={this.state.isParamRecomend}/>
                 </div>
               </div>
             );

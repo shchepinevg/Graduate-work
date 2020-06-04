@@ -7,9 +7,10 @@ import {FunctionsRoute} from './FunctionsRoute'
 
 import AddFunc from '../AddFunc'
 
-export const BaseRoute = () => (
+
+export const BaseRoute = (props) => (
     <Switch>
-        <Route path='/functions' component={FunctionsRoute} />
+        <Route path='/functions' render={() => <FunctionsRoute data={props.data} />} />
         <Route path='/function' component={FunctionRoute} />
         <Route path='/add' component={AddFunc} />
     </Switch>

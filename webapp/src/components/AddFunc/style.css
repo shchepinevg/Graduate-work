@@ -20,3 +20,9 @@
   width: 650px;
 }
 
+.btn-add {
+  position: absolute;
+  left: 600px;
+  top: 20px;
+}
+

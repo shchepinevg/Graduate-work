@@ -6,25 +6,6 @@ import { Button, Checkbox, Menu } from "antd";
 
 import "./style.css";
 
-const data = [
-  {
-    id: "1",
-    title: "Func1",
-  },
-  {
-    title: "Func2",
-    id: "2",
-  },
-  {
-    title: "Func3",
-    id: "3",
-  },
-  {
-    title: "Func4",
-    id: "4",
-  },
-];
-
 class FuncNameList extends Component {
   state = {
     isList: true,
@@ -32,8 +13,8 @@ class FuncNameList extends Component {
 
   render() {
     return (
-      <div>
-        {this.renderFunc(data)}
+      <div className="main-block">
+        {this.renderFunc(this.props.data)}
         <div style={{marginLeft: 20, marginTop: 15}}>
             <Button type="primary" className="btn">Добавить</Button>
             <Button type="default" className="btn" onClick={this.choiceClick}>
@@ -51,14 +32,14 @@ class FuncNameList extends Component {
     });
   };
 
-  renderFunc = () => {
+  renderFunc = (data) => {
     return (
-      <Menu mode="inline" className="main-block">
+      <Menu mode="inline" style={{backgroundColor: '#f0f2f5'}}>
         {data.map((val, index) => {
             if (this.state.isList) {
-                return <Menu.Item key={index}><Link to={`/functions/${index}`}>{val.title}</Link></Menu.Item>;
+                return <Menu.Item key={index}><Link to={`/functions/${index}`}>{val.name}</Link></Menu.Item>;
             } else {
-                return <Menu.Item key={index}><Checkbox key={index}>{val.title}</Checkbox></Menu.Item>;
+                return <Menu.Item key={index}><Checkbox key={index}>{val.name}</Checkbox></Menu.Item>;
             }
         })}
       </Menu>

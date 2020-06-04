@@ -14,7 +14,7 @@ class UserFunction(models.Model):
 class ParameterInfo(models.Model):
     user_function = models.ForeignKey(UserFunction, related_name="param", on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
-    discrete_continuous = models.BooleanField()
+    discrete_continuous = models.IntegerField()
     lower_bound = models.FloatField()
     upper_bound = models.FloatField()
 
@@ -24,17 +24,18 @@ class ParameterInfo(models.Model):
 class OptimizationFunction(models.Model):
     user_function = models.ForeignKey(UserFunction, on_delete=models.CASCADE)
     is_function = models.BooleanField()
-    optimization_meth = models.IntegerField()
+    optimization_meth = models.CharField(max_length=64)
     N = models.IntegerField()
     optim_type = models.IntegerField()
     value = models.FloatField()
     param_func = JSONField()
     param_optim = JSONField()
 
+# добавить k
 class OptimizationParameters(models.Model):
     user_function = models.ForeignKey(UserFunction, on_delete=models.CASCADE)
-    optim_func = models.OneToOneField(OptimizationFunction)
-    meta_optim_meth = models.IntegerField()
+    optim_func = models.OneToOneField(OptimizationFunction, on_delete=models.CASCADE)
+    meta_optim_meth = models.CharField(max_length=64)
     meta_N = models.IntegerField()
     meta_value = models.FloatField()
     meta_param_optim = JSONField()

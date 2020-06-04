@@ -8,13 +8,13 @@ import './style.css'
 
 class Func extends Component {
     state = {
-        isDisabled: true
-    }
+        isDisabled: true,
+    };
 
     render() {
         return (
             <div >
-                <FuncInfo idFunc={this.props.match.params.id} isDisabled = {this.state.isDisabled}/>
+                <FuncInfo data={this.props.data} idFunc={this.props.match.params.id} isDisabled={this.state.isDisabled}/>
                 <div className="btn-block">
                     <Button type="primary" className="btn-change" onClick={this.changeClick}>Изменить</Button>
                     <Button type="primary" shape="round" className="btn-optim">Оптимизировать</Button>
