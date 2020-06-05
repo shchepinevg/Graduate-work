@@ -26,7 +26,7 @@ const formItemLayoutWithOutLabel = {
 class ParamForFunc extends Component {
   render() {
     return (
-      <Form name="dynamic_form_item" {...formItemLayoutWithOutLabel}>
+      <Form id="paramInfo" name="dynamic_form_item" {...formItemLayoutWithOutLabel}>
         <Form.List name="names">
           {(fields, { add, remove }) => {
             return (
@@ -56,21 +56,22 @@ class ParamForFunc extends Component {
                       <Input
                         placeholder="Название параметра"
                         style={{ width: "15%" }}
-                        name={"np_"+index}
+                        id={"np_"+index}
                       />
-                      <Radio.Group>
-                        <Radio.Button value="a" >Дискретный</Radio.Button>
-                        <Radio.Button value="b" >Непрерывный</Radio.Button>
-                      </Radio.Group>
+                      <Input
+                        placeholder="1-непрерыв, 2-дискр"
+                        style={{ width: "20%" }}
+                        id={"dc_"+index}
+                      />
                       <Input
                         placeholder="Нижняя граница"
                         style={{ width: "13%" }}
-                        name={"bl_"+index}
+                        id={"bl_"+index}
                       />
                       <Input
                         placeholder="Верхняя граница"
                         style={{ width: "13%" }}
-                        name={"bu_"+index}
+                        id={"bu_"+index}
                       />
                     </Form.Item>
                     {fields.length > 0 ? (
@@ -79,6 +80,7 @@ class ParamForFunc extends Component {
                         style={{ margin: "0 8px" }}
                         onClick={() => {
                           remove(field.name);
+                          this.props.decLengthParam()
                         }}
                       />
                     ) : null}
@@ -91,6 +93,7 @@ class ParamForFunc extends Component {
                     type="dashed"
                     onClick={() => {
                       add();
+                      this.props.incLengthParam()
                     }}
                     style={{ marginLeft: '170px', width: '300px'}}
                   >
@@ -104,6 +107,7 @@ class ParamForFunc extends Component {
       </Form>
     );
   }
+
 }
 
 export default ParamForFunc;

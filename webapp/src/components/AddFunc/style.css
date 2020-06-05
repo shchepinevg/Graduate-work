@@ -22,7 +22,14 @@
 
 .btn-add {
   position: absolute;
-  left: 600px;
-  top: 20px;
+  left: 940px;
+  top: 52px;
+}
+
+.btn-back {
+  position: absolute;
+  left: 200px;
+  top: 52px;
+  width: 100px;
 }
 

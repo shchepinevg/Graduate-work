@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom'
 
 import FuncNameList from '../FuncNameList'
 import Func from '../Func'
+import AddFunc from "../AddFunc"
 
 export const FunctionsRoute = (props) => (
     <div>

@@ -23,6 +23,6 @@ urlpatterns = [
     path('create/optim-func', OptimizationFunctionCreateView.as_view()),
     path('create/optim-param', OptimizationParametersCreateView.as_view()),
 
-    path('delete/functions/<int:pk>', UserFunctionDestroyView.as_view()),
+    path('delete/function/<int:pk>', UserFunctionDestroyView.as_view()),
     path('update/name/<int:pk>', UFUpdateNameView.as_view()),
 ]

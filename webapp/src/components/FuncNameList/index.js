@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 
 import { Button, Checkbox, Menu } from "antd";
 
+import axios from "axios"
+
 import "./style.css";
 
 class FuncNameList extends Component {
@@ -16,11 +18,11 @@ class FuncNameList extends Component {
       <div className="main-block">
         {this.renderFunc(this.props.data)}
         <div style={{marginLeft: 20, marginTop: 15}}>
-            <Button type="primary" className="btn">Добавить</Button>
+            <Button href="/add" type="primary" className="btn">Добавить</Button>
             <Button type="default" className="btn" onClick={this.choiceClick}>
                 {this.state.isList ? "Выбрать" : "Отменить"}
             </Button>
-            {!this.state.isList && (<Button type="primary" danger>Удалить</Button>)}
+            {!this.state.isList && (<Button onClick={this.deleteFuncs} type="primary" danger>Удалить</Button>)}
         </div>
       </div>
     );
@@ -39,38 +41,40 @@ class FuncNameList extends Component {
             if (this.state.isList) {
                 return <Menu.Item key={index}><Link to={`/functions/${index}`}>{val.name}</Link></Menu.Item>;
             } else {
-                return <Menu.Item key={index}><Checkbox key={index}>{val.name}</Checkbox></Menu.Item>;
+                return <Menu.Item key={index}><Checkbox id={"ch_"+index} >{val.name}</Checkbox></Menu.Item>;
             }
         })}
       </Menu>
     );
   };
+
+  deleteFuncs = () => {
+    let arrForDel = []
+    let i = 0
+    while(document.getElementById("ch_"+i)) {
+      if (document.getElementById("ch_"+i).checked) {
+        arrForDel.push(i)
+      }
+      i = i + 1
+    }
+
+    this.sendForDel(arrForDel, 0)
+  }
+
+  sendForDel = (arrForDel, i) => {
+    if (i >= arrForDel.length) {
+      window.location.reload()
+      return
+    }
+
+    let forDel = this.props.data[arrForDel[i]].id
+
+    axios.delete(`http://127.0.0.1:8000/api/delete/function/${forDel}`)
+      .then( res => {
+        this.sendForDel(arrForDel, i+1)
+      })
+
+  }
 }
 
 export default FuncNameList;
-
-// Previos list
-{
-  /* <div className="main-block">
-<List
-    itemLayout="horizontal"
-    dataSource={data}
-    renderItem={item => (
-    <List.Item >
-        <List.Item.Meta
-        title={
-            this.state.isList ? 
-            <Button type="primary" block style={{width: '20%'}} href="https://ant.design/components/checkbox/">{item.title}</Button>: 
-            <Checkbox key={item.id}>{item.title}</Checkbox>
-        }
-        />
-    </List.Item>
-    )}
-/>
-<Button type="primary" className="btn">Добавить</Button>
-<Button type="default" className="btn" onClick={this.choiceClick}>{this.state.isList ? 'Выбрать': 'Отменить'}</Button>
-{!this.state.isList && <Button type="primary" danger>Удалить</Button>}
-</div> */
-}
-
-// style={{width: 300, backgroundColor: '#f0f2f5'}}

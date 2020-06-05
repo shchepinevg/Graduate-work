@@ -57,9 +57,7 @@ class FuncInfo extends Component {
                             <Input name="nameFunc" value={this.props.data[this.props.idFunc].name} />
                         </div>
                         <div className="input-blocks">
-                            <Upload name="fileFunc" {...props}>
-                                <Button><UploadOutlined /> Загрузить файл</Button>
-                            </Upload>
+                            <input type="file" />
                         </div>
                         <div className="input-blocks">
                             Относительный путь запускаемого файла:

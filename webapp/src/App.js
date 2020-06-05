@@ -17,12 +17,12 @@ class App extends Component {
     }
 
     async componentDidMount() {
+        // Заменить на пользователя
         const res = await axios.get("http://127.0.0.1:8000/api/get-functions/1")
         this.setState({
           func_data: res.data
         })
         this.wrapperParam(res.data)
-        console.log(res.data)
       }
 
     render() {
