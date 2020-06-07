@@ -21,21 +21,21 @@ class ParameterInfo(models.Model):
     def __str__(self):
         return self.name
 
-class OptimizationFunction(models.Model):
-    user_function = models.ForeignKey(UserFunction, on_delete=models.CASCADE)
-    is_function = models.BooleanField()
+class OptimizationInfo(models.Model):
     optimization_meth = models.CharField(max_length=64)
     N = models.IntegerField()
-    optim_type = models.IntegerField()
+    parameters = JSONField()
+    min_or_max = models.IntegerField()
     value = models.FloatField()
-    param_func = JSONField()
-    param_optim = JSONField()
 
-# добавить k
+class OptimizationFunction(models.Model):
+    user_function = models.ForeignKey(UserFunction, on_delete=models.CASCADE)
+    optim_info = models.OneToOneField(OptimizationInfo, on_delete=models.CASCADE, null=True)
+
 class OptimizationParameters(models.Model):
     user_function = models.ForeignKey(UserFunction, on_delete=models.CASCADE)
-    optim_func = models.OneToOneField(OptimizationFunction, on_delete=models.CASCADE)
+    optim_info = models.OneToOneField(OptimizationInfo, on_delete=models.CASCADE, null=True)
     meta_optim_meth = models.CharField(max_length=64)
     meta_N = models.IntegerField()
-    meta_value = models.FloatField()
     meta_param_optim = JSONField()
+    k = models.IntegerField(null=True)
