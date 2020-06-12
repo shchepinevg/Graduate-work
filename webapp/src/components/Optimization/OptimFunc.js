@@ -15,7 +15,7 @@ class OptimFunc extends Component {
   render() {
     return (
       <div>
-        <h1 style={{marginBottom: "30px"}}>{this.props.nameFunc}</h1>
+        <h1 style={{marginBottom: "30px"}}>{this.props.func_name}</h1>
         <div>
             <b>Метод оптимизации:</b>
             <Select defaultValue="GA" onChange={this.onChangeMethods} className="select-meth">
@@ -118,7 +118,7 @@ class OptimFunc extends Component {
         <div id="methParam">
           {GA.recomParam.map((val, index) => {
             return (
-              <div>
+              <div key={index}>
                 <div className="name-param">
                   {val.name}, {val.type}, {val.borderLow}, {val.borderHight}
                 </div>
@@ -137,7 +137,7 @@ class OptimFunc extends Component {
         <div id="methParam">
           {CE.recomParam.map((val, index) => {
             return (
-              <div>
+              <div key={index}>
                 <div className="name-param">
                   {val.name}, {val.type}, {val.borderLow}, {val.borderHight}
                 </div>
@@ -156,7 +156,7 @@ class OptimFunc extends Component {
         <div id="methParam">
           {DE.recomParam.map((val, index) => {
             return (
-              <div>
+              <div key={index}>
                 <div className="name-param">
                   {val.name}, {val.type}, {val.borderLow}, {val.borderHight}
                 </div>

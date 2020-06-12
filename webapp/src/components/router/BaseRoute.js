@@ -11,7 +11,7 @@ import AddFunc from '../AddFunc'
 export const BaseRoute = (props) => (
     <Switch>
         <Route path='/functions' render={() => <FunctionsRoute data={props.data} />} />
-        <Route path='/function' component={FunctionRoute} />
+        <Route path='/function' render={() => <FunctionRoute data={props.data} />} />
         <Route path='/add' component={AddFunc} />
         <Redirect from='/' to='/functions' /> 
     </Switch>

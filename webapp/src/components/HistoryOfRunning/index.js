@@ -24,9 +24,9 @@ class HistoryOfRunning extends Component {
     render() {
         return (
             <div>
-                {runFunc1.map((value) => {
+                {runFunc1.map((value, index) => {
                     return (
-                        <TabelWithParam mode={value.mode} data={value.data} min={value.min} />
+                        <TabelWithParam key={index} mode={value.mode} data={value.data} min={value.min} />
                     )
                 })}
             </div>

@@ -13,11 +13,11 @@ class Func extends Component {
 
     render() {
         return (
-            <div >
+            <div>
                 <FuncInfo data={this.props.data} idFunc={this.props.match.params.id} isDisabled={this.state.isDisabled}/>
                 <div className="btn-block">
                     {/* <Button type="primary" className="btn-change" onClick={this.changeClick}>Изменить</Button> */}
-                    <Button type="primary" shape="round" className="btn-optim">Оптимизировать</Button>
+                    <Button href={`/function/optimization/${this.props.match.params.id}`} type="primary" shape="round" className="btn-optim">Оптимизировать</Button>
                 </div>
                 <div className="btn-history">
                     <Button type="dashed" block>Просмотреть историю запусков</Button>

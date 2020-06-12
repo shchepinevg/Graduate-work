@@ -3,6 +3,7 @@ import React, {Component} from "react"
 import { Layout } from 'antd';
 
 import DevHeader from './components/DevHeader'
+import Auth from './components/Auth'
 import {BaseRoute} from './components/router/BaseRoute'
 
 import axios from "axios"
@@ -22,7 +23,7 @@ class App extends Component {
         this.setState({
           func_data: res.data
         })
-        this.wrapperParam(res.data)
+        this.wrapperParam(this.state.func_data)
       }
 
     render() {
