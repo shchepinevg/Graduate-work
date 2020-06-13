@@ -58,14 +58,14 @@ class OptimFunc extends Component {
   }
 
   runOptim = () => {
+    // Заменить на пользователя
     const data = {
       "user_function": 1,
       "is_function": 1,
       "optimization_meth": this.state.focusMethod,
       "N": document.getElementById("N").value,
-      "optim_type": this.state.isMinimization ? 1 : 2,
+      "min_or_max": this.state.isMinimization ? 1 : 2,
       "isRecomend": this.state.isParamRecomend ? 1 : 2,
-      "value": -1,
       "param_optim": this.getUserValue(this.state.focusMethod)
     }
 
