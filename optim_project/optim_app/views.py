@@ -19,6 +19,7 @@ from optim_app.serializer import (
     Optim_Param_Serializer
 )
 
+from optim_app.connectToR import ToR
 from optim_app.service import ServiceToCreateDir, ServiceToDeleteDir
 
 
@@ -30,8 +31,10 @@ class UserFunctionCreateView(CreateAPIView):
     def create(self, request, *args, **kwargs):
         request.data._mutable = True
 
+        # File creation
         stc = ServiceToCreateDir(request.data)
         request.data["hash"] = stc.save_directory()
+        ###
 
         request.data._mutable = False
 
@@ -56,8 +59,10 @@ class UserFunctionDestroyView(DestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         path_to_del = UserFunction.objects.get(id=kwargs["pk"]).hash
 
+        # File deletion
         std = ServiceToDeleteDir(path_to_del)
         std.del_directory()
+        ###
 
         return super().destroy(request, *args, **kwargs)
 
@@ -76,6 +81,13 @@ class OptimizationFunctionCreateView(CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         request.data._mutable = True
+
+        # Optimization
+        tor = ToR(request.data)
+        coordinates, value = tor.start_R()
+        request.data["coordinates"] = coordinates
+        request.data["value"] = value
+        ###
 
         request.data._mutable = False
 

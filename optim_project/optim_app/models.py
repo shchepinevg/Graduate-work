@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import ArrayField
 
 # Models for description user functions
 class UserFunction(models.Model):
@@ -37,6 +38,7 @@ class OptimizationFunction(models.Model):
     user_function = models.ForeignKey(UserFunction, on_delete=models.CASCADE)
     optim_info = models.OneToOneField(OptimizationInfo, on_delete=models.CASCADE, null=True)
     value = models.FloatField(null=True)
+    coordinates = ArrayField(base_field=models.FloatField(), null=True)
 ###
 
 # Model for description information about parameters optimization
@@ -48,4 +50,5 @@ class OptimizationParameters(models.Model):
     meta_param_optim = JSONField()
     k = models.IntegerField(null=True)
     value = models.FloatField(null=True)
+    coordinates = ArrayField(base_field=models.FloatField(), null=True)
 ###

@@ -66,7 +66,7 @@ class OptimFunc extends Component {
       "N": document.getElementById("N").value,
       "min_or_max": this.state.isMinimization ? 1 : 2,
       "isRecomend": this.state.isParamRecomend ? 1 : 2,
-      "param_optim": this.getUserValue(this.state.focusMethod)
+      "parameters": this.getUserValue(this.state.focusMethod)
     }
 
     console.log(data)
@@ -120,7 +120,7 @@ class OptimFunc extends Component {
             return (
               <div key={index}>
                 <div className="name-param">
-                  {val.name}, {val.type}, {val.borderLow}, {val.borderHight}
+                  {val.name}, {val.discrete_continuous}, {val.lower_bound}, {val.upper_bound}
                 </div>
                 <div className="input-param">
                   <Input id={"f_" + index} defaultValue={val.value} disabled={this.state.isParamRecomend}/>
@@ -139,7 +139,7 @@ class OptimFunc extends Component {
             return (
               <div key={index}>
                 <div className="name-param">
-                  {val.name}, {val.type}, {val.borderLow}, {val.borderHight}
+                  {val.name}, {val.discrete_continuous}, {val.lower_bound}, {val.upper_bound}
                 </div>
                 <div className="input-param">
                   <Input id={"f_" + index} defaultValue={val.value} disabled={this.state.isParamRecomend}/>
@@ -158,7 +158,7 @@ class OptimFunc extends Component {
             return (
               <div key={index}>
                 <div className="name-param">
-                  {val.name}, {val.type}, {val.borderLow}, {val.borderHight}
+                  {val.name}, {val.discrete_continuous}, {val.lower_bound}, {val.upper_bound}
                 </div>
                 <div className="input-param">
                   <Input id={"f_" + index} defaultValue={val.value} disabled={this.state.isParamRecomend}/>

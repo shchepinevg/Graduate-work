@@ -146,7 +146,7 @@ class OptimParam extends Component {
             return (
               <div key={index}>
                 <div className="name-param">
-                  {val.name}, {val.type}, {val.borderLow}, {val.borderHight}
+                  {val.name}, {val.discrete_continuous}, {val.lower_bound}, {val.upper_bound}
                 </div>
                 <div className="input-param">
                   <Input id={"p_" + index} defaultValue={val.value} disabled={this.state.isParamRecomend}/>
@@ -165,7 +165,7 @@ class OptimParam extends Component {
             return (
               <div key={index}>
                 <div className="name-param">
-                  {val.name}, {val.type}, {val.borderLow}, {val.borderHight}
+                  {val.name}, {val.discrete_continuous}, {val.lower_bound}, {val.upper_bound}
                 </div>
                 <div className="input-param">
                   <Input id={"p_" + index} defaultValue={val.value} disabled={this.state.isParamRecomend}/>
@@ -184,7 +184,7 @@ class OptimParam extends Component {
             return (
               <div key={index}>
                 <div className="name-param">
-                  {val.name}, {val.type}, {val.borderLow}, {val.borderHight}
+                  {val.name}, {val.discrete_continuous}, {val.lower_bound}, {val.upper_bound}
                 </div>
                 <div className="input-param">
                   <Input id={"p_" + index} defaultValue={val.value} disabled={this.state.isParamRecomend}/>
