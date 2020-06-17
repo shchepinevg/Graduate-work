@@ -33,24 +33,24 @@ Controller = function(str1,str2,path,param_func){
   }
   
   #���� ������� ��������������� ������
-  source("R\\Func.R")
-  source("R\\Optim.R")
+  source("optim_app\\R\\Func.R")
+  source("optim_app\\R\\Optim.R")
   # Meta_mas$func$id = "Schwefel"
   # Meta_mas$func$dim = 2
   if (!is.null(Meta_mas$func$id)){#������������ ���������� ��
-    f_class = (source(paste0("R\\StandartFunction\\",Meta_mas$func$id,".R")))$value
+    f_class = (source(paste0("optim_app\\R\\StandartFunction\\",Meta_mas$func$id,".R")))$value
     f = f_class$new(Meta_mas$func$dim)
   } else {                        #������������ ���������������� �������
-    source("R\\CustomFunc.R")
+    source("optim_app\\R\\CustomFunc.R")
     f = CustomFunc$new(path,param_func,minimization)
   }
   if (length(Meta_mas$id) == 1){#����� ������: ���������� ���������� �������
-    op_class = source(paste0("R\\Optim\\",Meta_mas$id[1],".R"))$value
+    op_class = source(paste0("optim_app\\R\\Optim\\",Meta_mas$id[1],".R"))$value
     op_final = op_class$new(Meta_mas$num[1],f)
   } else {                      #����� ������: ���������� ����������� ���������� ��
-    source("R\\MFunc.R")
-    op_class1 = source(paste0("R\\Optim\\",Meta_mas$id[1],".R"))$value
-    op_class2 = source(paste0("R\\Optim\\",Meta_mas$id[2],".R"))$value
+    source("optim_app\\R\\MFunc.R")
+    op_class1 = source(paste0("optim_app\\R\\Optim\\",Meta_mas$id[1],".R"))$value
+    op_class2 = source(paste0("optim_app\\R\\Optim\\",Meta_mas$id[2],".R"))$value
     op1 = op_class1$new(Meta_mas$num[1],f)
     meta_f = MFunc$new(op1,Meta_mas$num[3])
     op_final = op_class2$new(Meta_mas$num[2],meta_f)

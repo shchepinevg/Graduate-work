@@ -19,7 +19,7 @@ class App extends Component {
 
     async componentDidMount() {
         // Заменить на пользователя
-        const res = await axios.get("http://127.0.0.1:8000/api/get-functions/1")
+        const res = await axios.get("http://127.0.0.1:8000/api/get/functions/1")
         this.setState({
           func_data: res.data
         })
@@ -27,6 +27,12 @@ class App extends Component {
       }
 
     render() {
+        if (this.state.func_data.length == 0) {
+            return (
+              <h2 className="loading" >Loading...</h2>
+            )
+        }
+
         return (
             <Layout style={{ minHeight:"100vh" }}>
                 <DevHeader />

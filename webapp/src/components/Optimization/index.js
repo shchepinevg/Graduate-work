@@ -17,7 +17,7 @@ class Optimization extends Component {
 
 async componentDidMount() {
     // Заменить на пользователя
-    const res = await axios.get("http://127.0.0.1:8000/api/get-functions/1")
+    const res = await axios.get("http://127.0.0.1:8000/api/get/functions/1")
     this.setState({
       func_name: res.data
     })
@@ -34,7 +34,8 @@ async componentDidMount() {
       <div>
         <Tabs defaultActiveKey="1" size="large" className="tabs">
           <TabPane tab="Оптимизация целевой функции" key="1"  >
-            <OptimFunc func_name={this.state.func_name[this.props.match.params.id].name}/>
+            <OptimFunc func_name={this.state.func_name[this.props.match.params.id].name}
+                       idFunc={this.state.func_name[this.props.match.params.id].id}/>
           </TabPane>
           <TabPane tab="Оптимизация параметров метода оптимизации" key="2">
             <OptimParam />

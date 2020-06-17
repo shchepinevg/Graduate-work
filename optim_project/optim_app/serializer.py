@@ -53,14 +53,14 @@ class Optim_Func_Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = OptimizationFunction
-        fields = ('id', 'user_function', 'optim_info', 'value')
+        fields = ('id', 'user_function', 'optim_info', 'value', 'coordinates')
 
 class Optim_Param_Serializer(serializers.ModelSerializer):
     optim_info = OptimizationInfoSerializer(read_only=True)
 
     class Meta:
         model = OptimizationParameters
-        fields = ('id', 'user_function', 'optim_info', 'meta_optim_meth', 'meta_N', 'meta_param_optim', 'k', 'value')
+        fields = ('id', 'user_function', 'optim_info', 'meta_optim_meth', 'meta_N', 'meta_param_optim', 'k', 'value', 'coordinates')
 ###
 
 ###############################

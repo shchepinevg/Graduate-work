@@ -15,7 +15,7 @@ class Func extends Component {
         return (
             <div>
                 <FuncInfo data={this.props.data} idFunc={this.props.match.params.id} isDisabled={this.state.isDisabled}/>
-                <div className="btn-block">
+                <div className="btn-to-optim">
                     {/* <Button type="primary" className="btn-change" onClick={this.changeClick}>Изменить</Button> */}
                     <Button href={`/function/optimization/${this.props.match.params.id}`} type="primary" shape="round" className="btn-optim">Оптимизировать</Button>
                 </div>

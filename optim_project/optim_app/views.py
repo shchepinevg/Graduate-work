@@ -74,13 +74,17 @@ class UserFunctionDestroyView(DestroyAPIView):
 class OptimizationInfoCreateView(CreateAPIView):
     serializer_class = OptimizationInfoSerializer
     queryset = OptimizationInfo.objects.all()
+    def create(self, request, *args, **kwargs):
+        print()
+        return super().create(request, *args, **kwargs)
+
 
 class OptimizationFunctionCreateView(CreateAPIView):
     serializer_class = OptimizationFunctionSerializer
     queryset = OptimizationFunction.objects.all()
 
     def create(self, request, *args, **kwargs):
-        request.data._mutable = True
+        #request.data._mutable = True
 
         # Optimization
         tor = ToR(request.data)
@@ -89,7 +93,7 @@ class OptimizationFunctionCreateView(CreateAPIView):
         request.data["value"] = value
         ###
 
-        request.data._mutable = False
+        #request.data._mutable = False
 
         return super().create(request, *args, **kwargs)
 

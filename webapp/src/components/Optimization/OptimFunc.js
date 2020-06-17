@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { GA, DE, CE } from "./methods";
 
+import axios from "axios"
+
 import { Select, Input, Radio, Button, Checkbox } from "antd";
 const { Option } = Select;
 
@@ -58,18 +60,39 @@ class OptimFunc extends Component {
   }
 
   runOptim = () => {
-    // Заменить на пользователя
-    const data = {
-      "user_function": 1,
-      "is_function": 1,
-      "optimization_meth": this.state.focusMethod,
-      "N": document.getElementById("N").value,
-      "min_or_max": this.state.isMinimization ? 1 : 2,
-      "isRecomend": this.state.isParamRecomend ? 1 : 2,
-      "parameters": this.getUserValue(this.state.focusMethod)
+    console.log("Отправка")
+    this.sendOptimInfo().then((response) => {
+      this.sendOptimFunc(response.id)
+    })
+    console.log("Конец")
+  }
+
+  async sendOptimFunc(id) {
+    const optimFunc = {
+      "user_function": this.props.idFunc,
+      "optim_info": id,
+      "value": 0,
+      "coordinates": {
+        "is_function": 1,
+        "isRecommend": this.state.isParamRecomend ? 1 : 2
+      }
     }
 
-    console.log(data)
+    await axios.post("http://127.0.0.1:8000/api/create/optim-func", optimFunc)
+  }
+
+  sendOptimInfo = () => {
+    const optimInfo = {
+      "optimization_meth": this.state.focusMethod,
+      "N": parseInt(document.getElementById("N").value, 10),
+      "parameters": this.getUserValue(this.state.focusMethod),
+      "min_or_max": this.state.isMinimization ? 1 : 2,
+    }
+
+    return axios.post("http://127.0.0.1:8000/api/create/optim-info", optimInfo)
+      .then((res) => {
+        return res.data
+      })
   }
 
   getUserValue = (focusMeth) => {
@@ -83,7 +106,12 @@ class OptimFunc extends Component {
     }
 
     if (this.state.isParamRecomend) {
-      return(meth.recomParam)
+      let res = {}
+      meth.recomParam.forEach((item) => {
+        res[item.name] = item.value
+      })
+
+      return res
     }
 
     let methCopy = JSON.parse(JSON.stringify(meth))
@@ -91,7 +119,12 @@ class OptimFunc extends Component {
       val.value = document.getElementById("f_"+index).value
     })
 
-    return(methCopy.recomParam)
+    let res = {}
+    methCopy.recomParam.forEach((item) => {
+      res[item.name] = item.value
+    })
+
+    return res
   }
 
   onChangeParam = (e) => {

@@ -22,7 +22,7 @@ class FuncNameList extends Component {
             <Button type="default" className="btn" onClick={this.choiceClick}>
                 {this.state.isList ? "Выбрать" : "Отменить"}
             </Button>
-            {!this.state.isList && (<Button onClick={this.deleteFuncs} type="primary" danger>Удалить</Button>)}
+            {!this.state.isList && (<Button href="/" onClick={this.deleteFuncs} type="primary" danger>Удалить</Button>)}
         </div>
       </div>
     );
