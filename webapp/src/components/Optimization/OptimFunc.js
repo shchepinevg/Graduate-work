@@ -60,11 +60,9 @@ class OptimFunc extends Component {
   }
 
   runOptim = () => {
-    console.log("Отправка")
     this.sendOptimInfo().then((response) => {
       this.sendOptimFunc(response.id)
     })
-    console.log("Конец")
   }
 
   async sendOptimFunc(id) {

@@ -74,10 +74,11 @@ class UserFunctionDestroyView(DestroyAPIView):
 class OptimizationInfoCreateView(CreateAPIView):
     serializer_class = OptimizationInfoSerializer
     queryset = OptimizationInfo.objects.all()
+
     def create(self, request, *args, **kwargs):
         print()
-        return super().create(request, *args, **kwargs)
 
+        return super().create(request, *args, **kwargs)
 
 class OptimizationFunctionCreateView(CreateAPIView):
     serializer_class = OptimizationFunctionSerializer
@@ -100,6 +101,20 @@ class OptimizationFunctionCreateView(CreateAPIView):
 class OptimizationParametersCreateView(CreateAPIView):
     serializer_class = OptimizationParametersSerializer
     queryset = OptimizationParameters.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        #request.data._mutable = True
+
+        # Optimization
+        tor = ToR(request.data)
+        coordinates, value = tor.start_R()
+        request.data["coordinates"] = coordinates
+        request.data["value"] = value
+        ###
+
+        #request.data._mutable = False
+
+        return super().create(request, *args, **kwargs)
 
 ###
 

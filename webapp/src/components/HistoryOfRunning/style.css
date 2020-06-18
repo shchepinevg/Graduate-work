@@ -7,3 +7,21 @@
 .min {
     margin-top: 20px;
 }
+
+.loading {
+    text-align: center;
+}
+
+.tabs {
+    text-align: center !important;
+}
+
+.block-optim-func {
+    width: 60%;
+    margin-left: 270px;
+}
+
+.main-text {
+    font-size: medium;
+    text-align: left;
+}

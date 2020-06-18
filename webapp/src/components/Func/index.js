@@ -20,7 +20,7 @@ class Func extends Component {
                     <Button href={`/function/optimization/${this.props.match.params.id}`} type="primary" shape="round" className="btn-optim">Оптимизировать</Button>
                 </div>
                 <div className="btn-history">
-                    <Button type="dashed" block>Просмотреть историю запусков</Button>
+                    <Button href={`/function/history/${this.props.match.params.id}`} type="dashed" block>Просмотреть историю запусков</Button>
                 </div>
             </div>
         )

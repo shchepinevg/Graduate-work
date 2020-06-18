@@ -81,8 +81,8 @@ class ToR:
         elif self.info["coordinates"]["is_function"] == 2:
             str_optim = "{} {} {} {} {} {} {}".format(str(self.info["coordinates"]["is_function"]),
                                                 self.optim_info["optimization_meth"],
-                                                self.optim_info["meta_optim_meth"], str(self.optim_info["N"]),
-                                                str(self.optim_info["meta_N"]), str(self.optim_info["k"]),
+                                                self.info["meta_optim_meth"], str(self.optim_info["N"]),
+                                                str(self.info["meta_N"]), str(self.info["k"]),
                                                 str(self.optim_info["min_or_max"]))
             return str_optim
 
@@ -95,7 +95,7 @@ class ToR:
             if self.info["coordinates"]["is_function"] == 1:
                 params = self.optim_info["parameters"]
             elif self.info["coordinates"]["is_function"] == 2:
-                params = self.optim_info["meta_param_optim"]
+                params = self.info["meta_param_optim"]
 
             params = " ".join(str(e) for e in params)
             str_param += params

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { GA, DE, CE } from "./methods";
 
+import axios from "axios"
+
 import { Select, Input, Radio, Button } from "antd";
 const { Option } = Select;
 
@@ -33,9 +35,9 @@ class OptimParam extends Component {
         </div>
         <div style={{marginRight: "35px"}}>
             <b>Количество запусков целевой функции для МО1:</b>
-            <Input id="N1" className="inputN" />
+            <Input id="meta_N1" className="inputN" />
             <b>Количество запусков целевой функции для МО2:</b>
-            <Input id="N2" className="inputN" />
+            <Input id="meta_N2" className="inputN" />
             <div></div>
         </div>
 
@@ -74,22 +76,41 @@ class OptimParam extends Component {
   }
 
   runOptim = () => {
-    const data = {
-      "user_function": 1,
-      "is_function": 2,
-      "optimization_meth": this.state.focusMethod,
+    this.sendOptimInfo().then((response) => {
+      this.sendOptimParam(response.id)
+    })
+  }
+
+  async sendOptimParam(id) {
+    const optimParam = {
+      "user_function": this.props.idFunc,
+      "optim_info": id,
       "meta_optim_meth": this.state.focusMethodMeta,
-      "N": document.getElementById("N1").value,
-      "meta_N": document.getElementById("N2").value,
-      "k": document.getElementById("k").value,
-      "optim_type": this.state.isMinimization ? 1 : 2,
-      "isRecomend": this.state.isParamRecomend ? 1 : 2,
-      "value": -1,
-      "param_optim": {},
-      "meta_param_optim": this.getUserValue(this.state.focusMethodMeta)
+      "meta_N": parseInt(document.getElementById("meta_N2").value, 10),
+      "meta_param_optim": this.getUserValue(this.state.focusMethodMeta),
+      "k": parseInt(document.getElementById("k").value, 10),
+      "value": 0,
+      "coordinates": {
+        "is_function": 2,
+        "isRecommend": this.state.isParamRecomend ? 1 : 2
+      }
     }
 
-    console.log(data)
+    await axios.post("http://127.0.0.1:8000/api/create/optim-param", optimParam)
+  }
+
+  sendOptimInfo = () => {
+    const optimInfo = {
+      "optimization_meth": this.state.focusMethod,
+      "N": parseInt(document.getElementById("meta_N1").value, 10),
+      "parameters": {"recommend": true},
+      "min_or_max": this.state.isMinimization ? 1 : 2,
+    }
+
+    return axios.post("http://127.0.0.1:8000/api/create/optim-info", optimInfo)
+      .then((res) => {
+        return res.data
+      })
   }
 
   getUserValue = (focusMeth) => {
@@ -103,7 +124,12 @@ class OptimParam extends Component {
     }
 
     if (this.state.isParamRecomend) {
-      return(meth.recomParam)
+      let res = {}
+      meth.recomParam.forEach((item) => {
+        res[item.name] = item.value
+      })
+
+      return res
     }
 
     let methCopy = JSON.parse(JSON.stringify(meth))
@@ -111,7 +137,12 @@ class OptimParam extends Component {
       val.value = document.getElementById("p_"+index).value
     })
 
-    return(methCopy.recomParam)
+    let res = {}
+    methCopy.recomParam.forEach((item) => {
+      res[item.name] = item.value
+    })
+
+    return res
   }
 
   onChangeParam = (e) => {
