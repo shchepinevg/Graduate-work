@@ -123,9 +123,17 @@ class OptimizationFunctionListView(ListAPIView):
     serializer_class = Optim_Func_Serializer
     queryset = OptimizationFunction.objects.all()
 
+    def get_queryset(self):
+        query = OptimizationFunction.objects.filter(user_function=self.kwargs["pk"])
+        return query
+
 class OptimizationParametersListView(ListAPIView):
     serializer_class = Optim_Param_Serializer
     queryset = OptimizationParameters.objects.all()
+
+    def get_queryset(self):
+        query = OptimizationParameters.objects.filter(user_function=self.kwargs["pk"])
+        return query
 
 ###
 

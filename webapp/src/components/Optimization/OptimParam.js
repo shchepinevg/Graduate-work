@@ -13,6 +13,7 @@ class OptimParam extends Component {
     focusMethodMeta: "GA",
     isParamRecomend: true,
     isMinimization: true,
+    isLoading: false
   };
 
   render() {
@@ -76,6 +77,9 @@ class OptimParam extends Component {
   }
 
   runOptim = () => {
+    this.setState({
+      isLoading: true
+    })
     this.sendOptimInfo().then((response) => {
       this.sendOptimParam(response.id)
     })
@@ -97,6 +101,7 @@ class OptimParam extends Component {
     }
 
     await axios.post("http://127.0.0.1:8000/api/create/optim-param", optimParam)
+    window.location.href = `/function/history/${this.props.toHistory}`
   }
 
   sendOptimInfo = () => {

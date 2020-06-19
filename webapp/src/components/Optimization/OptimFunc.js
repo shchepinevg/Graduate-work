@@ -11,7 +11,8 @@ class OptimFunc extends Component {
   state = {
     focusMethod: "GA",
     isParamRecomend: true,
-    isMinimization: true
+    isMinimization: true,
+    isLoading: false
   };
 
   render() {
@@ -53,13 +54,16 @@ class OptimFunc extends Component {
         </div>
         <div>{this.paramsMethod(this.state.focusMethod)}</div>
 
-        <Button type="primary" style={{width: "260px"}} onClick={this.runOptim} block>Запустить</Button>
+        <Button type="primary" style={{width: "260px"}} loading={this.state.isLoading} onClick={this.runOptim} block>Запустить</Button>
 
       </div>
     );
   }
 
   runOptim = () => {
+    this.setState({
+      isLoading: true
+    })
     this.sendOptimInfo().then((response) => {
       this.sendOptimFunc(response.id)
     })
@@ -77,6 +81,7 @@ class OptimFunc extends Component {
     }
 
     await axios.post("http://127.0.0.1:8000/api/create/optim-func", optimFunc)
+    window.location.href = `/function/history/${this.props.toHistory}`
   }
 
   sendOptimInfo = () => {

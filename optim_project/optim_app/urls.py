@@ -23,7 +23,7 @@ urlpatterns = [
     path('create/optim-func', OptimizationFunctionCreateView.as_view()),
     path('create/optim-param', OptimizationParametersCreateView.as_view()),
 
-    path('get/optim-func', OptimizationFunctionListView.as_view()),
-    path('get/optim-param', OptimizationParametersListView.as_view())
+    path('get/optim-func/<int:pk>', OptimizationFunctionListView.as_view()),
+    path('get/optim-param/<int:pk>', OptimizationParametersListView.as_view())
 ]
 

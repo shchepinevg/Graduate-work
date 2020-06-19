@@ -16,11 +16,13 @@ class Optimization extends Component {
         <Tabs defaultActiveKey="1" size="large" className="tabs">
           <TabPane tab="Оптимизация целевой функции" key="1"  >
             <OptimFunc func_name={this.props.data[this.props.match.params.id].name}
-                       idFunc={this.props.data[this.props.match.params.id].id}/>
+                       idFunc={this.props.data[this.props.match.params.id].id}
+                       toHistory={this.props.match.params.id}/>
           </TabPane>
           <TabPane tab="Оптимизация параметров метода оптимизации" key="2">
             <OptimParam func_name={this.props.data[this.props.match.params.id].name}
-                        idFunc={this.props.data[this.props.match.params.id].id}/>
+                        idFunc={this.props.data[this.props.match.params.id].id}
+                        toHistory={this.props.match.params.id}/>
           </TabPane>
         </Tabs>
         
