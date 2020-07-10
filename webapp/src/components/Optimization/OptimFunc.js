@@ -4,7 +4,7 @@ import { GA, DE, CE } from "./methods";
 
 import axios from "axios"
 
-import { Select, Input, Radio, Button, Checkbox } from "antd";
+import { Select, Input, Radio, Button } from "antd";
 const { Option } = Select;
 
 class OptimFunc extends Component {

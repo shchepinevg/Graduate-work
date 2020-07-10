@@ -35,8 +35,8 @@ Controller = function(str1,str2,path,param_func){
   #���� ������� ��������������� ������
   source("optim_app\\R\\Func.R")
   source("optim_app\\R\\Optim.R")
-  # Meta_mas$func$id = "Schwefel"
-  # Meta_mas$func$dim = 2
+  # Meta_mas$func$id = "Rastrigin"
+  # Meta_mas$func$dim = 5
   if (!is.null(Meta_mas$func$id)){#������������ ���������� ��
     f_class = (source(paste0("optim_app\\R\\StandartFunction\\",Meta_mas$func$id,".R")))$value
     f = f_class$new(Meta_mas$func$dim)

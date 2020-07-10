@@ -29,14 +29,15 @@ const props = {
 
 class AddFunc extends Component {
     state = {
-      lengthPamar: 0
+      lengthPamar: 0,
+      isLoading: false
     }
 
     render() {
         return (
           <div>
             <Button className="btn-back" href="/functions" type='primary'>Назад</Button>
-            <Button className="btn-add" onClick={this.addFunc} type='primary'>Добавить функцию</Button>
+            <Button className="btn-add" loading={this.state.isLoading} onClick={this.addFunc} type='primary'>Добавить функцию</Button>
             <Form id="funcInfo" >
                 <div className="input-block">
                     Название функции:
@@ -60,6 +61,9 @@ class AddFunc extends Component {
     }
 
      addFunc = () => {
+      this.setState({
+        isLoading: true
+      })
       this.getResponseFunc().then((response) => {
         this.sendParam(0, response.id)
       }) 

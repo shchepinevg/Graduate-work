@@ -71,15 +71,15 @@ class HistoryOptimParam extends Component {
                 </div>
 
                 <div>
-                    <b className="main-text">Найденный минимум: </b>
-                    <nobr className="main-text">{data.value}</nobr>
-                </div>
-
-                <div>
                     <b className="main-text">Координаты: </b>
                     <Popover content={this.randerCoordinates(data.coordinates)}>
                         <a className="main-text">cмотреть</a>
                     </Popover>
+                </div>
+                
+                <div>
+                    <b className="main-text">Найденный минимум: </b>
+                    <nobr className="main-text">{data.value}</nobr>
                 </div>
             </div>
         )

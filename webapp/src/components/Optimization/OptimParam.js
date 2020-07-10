@@ -37,7 +37,7 @@ class OptimParam extends Component {
         <div style={{marginRight: "35px"}}>
             <b>Количество запусков целевой функции для МО1:</b>
             <Input id="meta_N1" className="inputN" />
-            <b>Количество запусков целевой функции для МО2:</b>
+            <b>Количество запусков метафункции для МО2:</b>
             <Input id="meta_N2" className="inputN" />
             <div></div>
         </div>
@@ -70,7 +70,7 @@ class OptimParam extends Component {
         </div>
         <div>{this.paramsMethod(this.state.focusMethodMeta)}</div>
 
-        <Button type="primary" style={{width: "260px"}} onClick={this.runOptim} block>Запустить</Button>
+        <Button type="primary" style={{width: "260px"}} loading={this.state.isLoading} onClick={this.runOptim} block>Запустить</Button>
 
       </div>
     );

@@ -110,25 +110,37 @@ PSO <- R6Class("PSO",
                    return (list(value = best_global_result, solution = best_global_coords))
                  },
                  optim = function(continuous,discrete,point){
-                   fitness = function(x){
-                     continuous = x[1:private$func$get_dim()$continuous]
-                     discrete = round(x[-(1:private$func$get_dim()$continuous)])
-                     y = private$func$get_fitness()(continuous,discrete);return(y)}
+                   
                    maxVel = 0.3*sqrt(sum((private$func$get_Pcontinuous()$upper-private$func$get_Pcontinuous()$lower)^2))
                    if (private$func$get_dim()$discrete == 0){
                      lower_disc = NULL
                      upper_disc = NULL
+                     fitness = function(x){
+                       y = private$func$get_fitness()(x,NULL);return(y)}
+                     
                    } else {
                      lower_disc = private$func$get_Pdiscrete()$lower-0.49
                      upper_disc = private$func$get_Pdiscrete()$upper+0.49
+                     fitness = function(x){
+                       continuous = x[1:private$func$get_dim()$continuous]
+                       discrete = round(x[-(1:private$func$get_dim()$continuous)])
+                       y = private$func$get_fitness()(continuous,discrete);return(y)}
+                     
+                   }
+                   if (private$func$get_dim()$continuous == 0){
+                     lower = lower_disc
+                     upper = upper_disc
+                   } else {
+                     lower = c(private$func$get_Pcontinuous()$lower,lower_disc) 
+                     upper = c(private$func$get_Pcontinuous()$upper,upper_disc)
                    }
                    res <-  private$pso(target_func = fitness,
                                 params = c(private$dim,# размерность
                                            c(discrete[1],continuous),#параметры задаваемые пользователем
                                            maxVel,#максимальная скорость
                                            private$N/discrete[1]),#число итераций
-                                lower = c(private$func$get_Pcontinuous()$lower,lower_disc), 
-                                upper = c(private$func$get_Pcontinuous()$upper,upper_disc),  
+                                lower = lower, 
+                                upper = upper,  
                                 default_params = c(private$func$get_Pcontinuous()$default,private$func$get_Pdiscrete()$default),
                                 accur = 10^-discrete[2]
                    )

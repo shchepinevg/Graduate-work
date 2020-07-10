@@ -3,7 +3,6 @@ import React, {Component} from "react"
 import { Layout } from 'antd';
 
 import DevHeader from './components/DevHeader'
-import Auth from './components/Auth'
 import {BaseRoute} from './components/router/BaseRoute'
 
 import axios from "axios"
@@ -46,9 +45,9 @@ class App extends Component {
         data.map((val) => {
             val.param.map((value) => {
                 if (value.discrete_continuous == 1) {
-                    value.discrete_continuous = "Дискретный"
-                } else {
                     value.discrete_continuous = "Непрерывный"
+                } else {
+                    value.discrete_continuous = "Дискретный"
                 }
             })
         })

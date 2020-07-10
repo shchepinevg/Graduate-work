@@ -45,12 +45,7 @@ class HistoryOptimFunc extends Component {
 
                 <div>
                     <b className="main-text">Тип оптимизации: </b>
-                    {data.optim_info.min_or_max == 1 ? <nobr className="main-text">минимизация</nobr> : <nobr className="main-text">минимизация</nobr>}
-                </div>
-
-                <div>
-                    <b className="main-text">Найденный минимум: </b>
-                    <nobr className="main-text">{data.value}</nobr>
+                    {data.optim_info.min_or_max == 1 ? <nobr className="main-text">минимизация</nobr> : <nobr className="main-text">максимизация</nobr>}
                 </div>
 
                 <div>
@@ -58,6 +53,11 @@ class HistoryOptimFunc extends Component {
                     <Popover content={this.randerCoordinates(data.coordinates)}>
                         <a className="main-text">cмотреть</a>
                     </Popover>
+                </div>
+
+                <div>
+                    <b className="main-text">Найденный минимум: </b>
+                    <nobr className="main-text">{data.value}</nobr>
                 </div>
             </div>
         )

@@ -18,7 +18,10 @@ class DevHeader extends Component {
                     Зарегестрироваться
                 </Menu.Item>
                 <Menu.Item key="signIn" className="menu-item">
-                    Войти
+                    <Link to={'/login'}>Войти</Link>
+                </Menu.Item>
+                <Menu.Item key="faq" className="menu-item">
+                    <Link to={`/faq`}>FAQ</Link>
                 </Menu.Item>
             </ Menu>
         )

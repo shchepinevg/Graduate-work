@@ -23,6 +23,9 @@ MM <- R6Class("MM",
               private = list(
                 name = "Metamodelling algorithm",
                 gp_fit = function(train,k,kernel = NULL){
+                  sink(file = "1.txt",type = c("output", "message"))
+                  
+                  
                   n = ncol(train)-1
                   if (is.null(kernel)){
                     kernels = c("rbfdot","polydot","vanilladot","tanhdot","laplacedot","besseldot","anovadot","splinedot")
@@ -30,7 +33,10 @@ MM <- R6Class("MM",
                     for (i in 1:length(kernels)){
                       presense_error = FALSE
                       tryCatch({
-                        gp = gausspr(x = train[,1:n], y = train[,n+1],type = "regression",kernel = kernel,kpar="automatic")
+                       
+                          gp = gausspr(x = train[,1:n], y = train[,n+1],type = "regression",kernel = kernels[i],kpar="automatic")
+                        
+                        
                        
                         
                       },error = function(cond){
@@ -46,6 +52,9 @@ MM <- R6Class("MM",
                   }
                   gp = gausspr(x = train[,1:n], y = train[,n+1],type = "regression",kernel = kernel,kpar="automatic")
                   
+                  sink()
+                  file.remove("1.txt")
+                  
                   return(list(gp = gp,kern = kernel))
                 },
                 gp_pred = function(gp,X){
@@ -56,7 +65,7 @@ MM <- R6Class("MM",
                   n = length(lower)
                   count_CV_blocks = params_train[1]
                   recalc_period = params_train[2]
-                  print("metamodel fit")
+                  #print("metamodel fit")
                   while(TRUE){
                     tryCatch({
                       #Формирование родительских особей
@@ -69,19 +78,19 @@ MM <- R6Class("MM",
                       parents = parents[order_sort,]
                       train = unique(parents)
                       #Настройка метамодели
-                      res = gp_fit(train,count_CV_blocks)
+                      res = private$gp_fit(train,count_CV_blocks)
                       gp = res$gp
                       kern = res$kern
                       #В случае отсутствие ошибки - выход из цикла
                       break
                     },error = function(cond){
-                      print("error metamodel fit")
+                      #print("error metamodel fit")
                     })
                   }
                   
                   #Проверка на размер обучающей выборки
                   if (nrow(train) > max_size_sample){
-                    print("train data reduced")
+                    #print("train data reduced")
                     order_sort = sort(train[,(n+1)],index.return = TRUE)$ix
                     train = train[order_sort,]
                     train = train[1:max_size_sample,]
@@ -89,7 +98,7 @@ MM <- R6Class("MM",
                   
                   #Проход по итерациям
                   for (i in 1:itermax){
-                    print(paste("iteration",i))
+                    #print(paste("iteration",i))
                     
                     while(TRUE){
                       tryCatch({
@@ -114,7 +123,7 @@ MM <- R6Class("MM",
                                   },
                                   {#стратегия 4
                                     current_parents = parents[sample(1:parents_size,3),]
-                                    dither = (1-param_mut[2])*runif(1,0,1)+params_mut[2]
+                                    dither = (1-params_mut[2])*runif(1,0,1)+params_mut[2]
                                     offsprings[j,1:n] = parents[1,1:n] +dither+(current_parents[2,1:n]-current_parents[3,1:n])
                                   },
                                   {#стратегия 5
@@ -130,7 +139,7 @@ MM <- R6Class("MM",
                                     }
                                   },
                                   {#стратегия 7*
-                                    current_parent = parents[sample(1:parents_size,1),]
+                                    current_parent = parents[sample(1:parents_size,1),1:n]
                                     offsprings[j,1:n] = current_parent + runif(n,-0.5,0.5)*params_mut[1]
                                   })
                           #Проверка точки на принадлежность области и корректировка координат
@@ -144,7 +153,7 @@ MM <- R6Class("MM",
                         }
                         
                         
-                        offsprings[,(n+1)] = gp_pred(gp,offsprings[,1:n])
+                        offsprings[,(n+1)] = private$gp_pred(gp,offsprings[,1:n])
                         
                         #Сортировка точек по возрастанию значения модели
                         order_sort = sort(offsprings[,n+1],index.return = TRUE)$ix
@@ -180,9 +189,9 @@ MM <- R6Class("MM",
                           prob_train = prob_train[1:max_size_sample,]
                         }
                         if (i %% recalc_period == 0){
-                          res = gp_fit(prob_train,count_CV_blocks)
+                          res = private$gp_fit(prob_train,count_CV_blocks)
                         } else {
-                          res = gp_fit(prob_train,count_CV_blocks,kern)
+                          res = private$gp_fit(prob_train,count_CV_blocks,kern)
                         }
                         gp = res$gp
                         kern = res$kern
@@ -191,7 +200,7 @@ MM <- R6Class("MM",
                         break
                       },error = function(cond){
                         print(cond)
-                        print("error new model fit")
+                        #print("error new model fit")
                       })
                     }
                     train = prob_train
@@ -199,27 +208,38 @@ MM <- R6Class("MM",
                     parents = train[1:parents_size,]
                     
                     id_best = which.min(train[,n+1])
-                    print(paste("best: pos =",paste0(round(train[id_best,1:n],3),collapse = " ")," val =",round(train[id_best,n+1],3)," size_train =",nrow(train)))
+                    #print(paste("best: pos =",paste0(round(train[id_best,1:n],3),collapse = " ")," val =",round(train[id_best,n+1],3)," size_train =",nrow(train)))
                   }
                   
                   result = list(pos = train[id_best,1:n],value = train[id_best,n+1])#,errors = count_of_errors)
                   return(result)
                 },
                 optim = function(continuous,discrete,point){
-                  fitness = function(x){
-                    continuous = x[1:private$func$get_dim()$continuous]
-                    discrete = round(x[-(1:private$func$get_dim()$continuous)])
-                    y = private$func$get_fitness()(continuous,discrete);return(-y)}
                   if (private$func$get_dim()$discrete == 0){
                     lower_disc = NULL
                     upper_disc = NULL
+                    fitness = function(x){
+                      y = private$func$get_fitness()(x,NULL);return(y)}
+                    
                   } else {
                     lower_disc = private$func$get_Pdiscrete()$lower-0.49
                     upper_disc = private$func$get_Pdiscrete()$upper+0.49
+                    fitness = function(x){
+                      continuous = x[1:private$func$get_dim()$continuous]
+                      discrete = round(x[-(1:private$func$get_dim()$continuous)])
+                      y = private$func$get_fitness()(continuous,discrete);return(y)}
+                    
+                  }
+                  if (private$func$get_dim()$continuous == 0){
+                    lower = lower_disc
+                    upper = upper_disc
+                  } else {
+                    lower = c(private$func$get_Pcontinuous()$lower,lower_disc) 
+                    upper = c(private$func$get_Pcontinuous()$upper,upper_disc)
                   }
                   res =  private$MetaModelling(fitness = fitness,
-                                               lower = c(private$func$get_Pcontinuous()$lower,lower_disc), 
-                                               upper = c(private$func$get_Pcontinuous()$upper,upper_disc), 
+                                               lower = lower, 
+                                               upper = upper, 
                                           parents_size = discrete[1],
                                           itermax = round(private$N/discrete[1]),
                                           offsprings_size = discrete[2],

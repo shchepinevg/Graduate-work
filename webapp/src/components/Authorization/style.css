@@ -1,0 +1,20 @@
+.block-auth {
+    margin-left: 600px;
+    margin-top: 50px;
+}
+
+.block-login {
+    width: 200px;
+    margin-bottom: 30px;
+}
+
+.block-password {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.btn-login {
+    width: 100px;
+    margin-left: 50px;
+}
+

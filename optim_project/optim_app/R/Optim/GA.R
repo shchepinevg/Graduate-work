@@ -58,22 +58,32 @@ GA <- R6Class("GA",
                   if (Mutation == "gareal_powMutation"){
                     Mutation = function(...) gareal_powMutation(..., pow = discrete[5])
                   }
-                  fitness = function(x){
-                    continuous = x[1:private$func$get_dim()$continuous]
-                    discrete = round(x[-(1:private$func$get_dim()$continuous)])
-                    y = private$func$get_fitness()(continuous,discrete);return(-y)}
                   if (private$func$get_dim()$discrete == 0){
                     lower_disc = NULL
                     upper_disc = NULL
+                    fitness = function(x){
+                      y = private$func$get_fitness()(x,NULL);return(-y)}
+                    
                   } else {
                     lower_disc = private$func$get_Pdiscrete()$lower-0.49
                     upper_disc = private$func$get_Pdiscrete()$upper+0.49
+                    fitness = function(x){
+                      continuous = x[1:private$func$get_dim()$continuous]
+                      discrete = round(x[-(1:private$func$get_dim()$continuous)])
+                      y = private$func$get_fitness()(continuous,discrete);return(-y)}
+                    
                   }
-                  
+                  if (private$func$get_dim()$continuous == 0){
+                    lower = lower_disc
+                    upper = upper_disc
+                  } else {
+                    lower = c(private$func$get_Pcontinuous()$lower,lower_disc) 
+                    upper = c(private$func$get_Pcontinuous()$upper,upper_disc)
+                  }
                   res <<-  ga(type = "real-valued",
                               fitness = fitness,
-                              lower = c(private$func$get_Pcontinuous()$lower,lower_disc), 
-                              upper = c(private$func$get_Pcontinuous()$upper,upper_disc), 
+                              lower = lower, 
+                              upper = upper, 
                               popSize = discrete[1],
                               maxiter = round(private$N/discrete[1]),
                               elitism = continuous[3],
